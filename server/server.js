@@ -19,6 +19,11 @@ app.use(cors());
 app.use(express.json());
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
+// Root Route
+app.get('/', (req, res) => {
+    res.send('Icon Institute API is running...');
+});
+
 // Routes placeholders
 app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/vacancy', require('./routes/vacancyRoutes'));
