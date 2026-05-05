@@ -24,6 +24,20 @@ app.get('/', (req, res) => {
     res.send('Icon Institute API is running...');
 });
 
+// Health Check Route
+app.get('/api/health', (req, res) => {
+    res.json({
+        status: 'Server is running',
+        dbStatus: mongoose.connection.readyState === 1 ? 'Connected' : 'Disconnected',
+        envCheck: {
+            MONGO_URI: !!process.env.MONGO_URI,
+            JWT_SECRET: !!process.env.JWT_SECRET,
+            CLOUDINARY_CLOUD_NAME: !!process.env.CLOUDINARY_CLOUD_NAME,
+            ADMIN_EMAIL: !!process.env.ADMIN_EMAIL
+        }
+    });
+});
+
 // Routes placeholders
 app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/vacancy', require('./routes/vacancyRoutes'));
